@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kahami Academy - Sistema de Simulación Estética con IA</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>Kahami Academy</h1>
+                <p class="subtitle">Simulación Estética con IA</p>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" onclick="navigateTo('index.html')">Inicio</a></li>
+                <li><a href="#" onclick="navigateTo('simulator.html')">Simulador</a></li>
+                <li><a href="#" onclick="navigateTo('dashboard.html')">Mi Dashboard</a></li>
+                <li id="authLink"><a href="#" onclick="navigateTo('login.html')">Iniciar Sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Transforma tu Look antes de Actuar</h2>
+                <p>Simula procedimientos estéticos con IA y descubre qué cursos son perfectos para ti</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="navigateTo('simulator.html')">
+                        Probar Simulador
+                    </button>
+                    <button class="btn btn-secondary" onclick="navigateTo('login.html')">
+                        Crear Cuenta
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h3>¿Qué ofrece Kahami Academy?</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Simulación Realista</h4>
+                    <p>Visualiza cómo te verías con diferentes procedimientos estéticos</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h4>IA Inteligente</h4>
+                    <p>Análisis automático de rasgos faciales para recomendaciones personalizadas</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h4>Cursos Especializados</h4>
+                    <p>Aprende de expertos en Micropigmentación, Microblading, Pestañas y más</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h4>Recomendaciones Smart</h4>
+                    <p>Descubre qué cursos son ideales basado en tus características</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="simulators-showcase">
+            <h3>Nuestros Simuladores</h3>
+            <div class="simulators-grid">
+                <div class="simulator-card">
+                    <h4>Micropigmentación</h4>
+                    <p>Diseño de cejas con pigmentación digital</p>
+                </div>
+                <div class="simulator-card">
+                    <h4>Microblading</h4>
+                    <p>Cejas con efecto de pelos individuales</p>
+                </div>
+                <div class="simulator-card">
+                    <h4>Extensiones de Pestañas</h4>
+                    <p>Amplifica tu mirada</p>
+                </div>
+                <div class="simulator-card">
+                    <h4>Diseño de Uñas</h4>
+                    <p>Prueba colores y diseños</p>
+                </div>
+                <div class="simulator-card">
+                    <h4>Color de Cabello</h4>
+                    <p>Experimenta transformaciones</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Kahami Academy. Todos los derechos reservados.</p>
+        <p>Desarrollado con IA y pasión por la estética</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/utils/navigation.js"></script>
+    <script>
+        // Actualizar navbar al cargar
+        checkAuthStatus();
+    </script>
+</body>
+</html>

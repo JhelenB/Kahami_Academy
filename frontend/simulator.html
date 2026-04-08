@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador - Kahami Academy</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>Kahami Academy</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="navigateTo('index.html')">Inicio</a></li>
+                <li><a href="#" onclick="navigateTo('simulator.html')">Simulador</a></li>
+                <li><a href="#" onclick="navigateTo('dashboard.html')">Dashboard</a></li>
+                <li id="authLink"><a href="#" onclick="navigateTo('login.html')">Iniciar Sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="simulator-container">
+        <h2>Simulador de Procedimientos Estéticos</h2>
+
+        <div class="simulator-grid">
+            <section class="simulator-section">
+                <h3>Selecciona Tipo de Simulación</h3>
+                <div class="simulator-types">
+                    <button class="simulator-btn" onclick="selectSimulator('micropigmentation')">
+                        Micropigmentación
+                    </button>
+                    <button class="simulator-btn" onclick="selectSimulator('microblading')">
+                        Microblading
+                    </button>
+                    <button class="simulator-btn" onclick="selectSimulator('lashes')">
+                        Pestañas
+                    </button>
+                    <button class="simulator-btn" onclick="selectSimulator('nails')">
+                        Uñas
+                    </button>
+                    <button class="simulator-btn" onclick="selectSimulator('hairColor')">
+                        Color Cabello
+                    </button>
+                </div>
+            </section>
+
+            <section class="simulator-section">
+                <h3>Carga tu Foto</h3>
+                <div class="upload-area" id="uploadArea">
+                    <p>Arrastra tu foto aquí o haz clic para seleccionar</p>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+                <canvas id="simulationCanvas" style="max-width: 100%; margin-top: 20px;"></canvas>
+            </section>
+
+            <section class="simulator-section">
+                <h3>Parámetros de Simulación</h3>
+                <div id="parametersPanel" class="parameters-panel">
+                    <p>Selecciona un tipo de simulación para ver los parámetros disponibles</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="simulator-actions">
+            <button class="btn btn-primary" onclick="runSimulation()" id="simulateBtn" disabled>
+                Ejecutar Simulación
+            </button>
+            <button class="btn btn-secondary" onclick="saveSimulation()" id="saveBtn" disabled>
+                Guardar Resultado
+            </button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Kahami Academy</p>
+    </footer>
+
+    <!-- Librerías IA client-side -->
+    <script async src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@0.0.5/dist/face-api.min.js"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/utils/navigation.js"></script>
+    <script src="js/utils/optimization.js"></script>
+    <script src="js/ai/faceDetection.js"></script>
+    <script src="js/ai/featureAnalysis.js"></script>
+    <script src="js/ai/simulators/micropigmentation.js"></script>
+    <script src="js/ai/simulators/microblading.js"></script>
+    <script src="js/ai/simulators/lashes.js"></script>
+    <script src="js/ai/simulators/nails.js"></script>
+    <script src="js/ai/simulators/hairColor.js"></script>
+    <script src="js/components/simulationCanvas.js"></script>
+    <script src="js/pages/simulator.js"></script>
+</body>
+</html>
