@@ -200,7 +200,12 @@ Proceso similar a Render:
 ```python
 # backend/kahami_backend/settings.py - PRODUCCIÓN
 DEBUG = False
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['tu-dominio.com', 'www.tu-dominio.com']
+=======
+ALLOWED_HOSTS = ['kahami-academy.vercel.app', 
+                'kahami-academy.vercel.app']
+>>>>>>> c5d7108 (Guardar cambios locales antes de rebase)
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -255,7 +260,11 @@ pip install sentry-sdk
 ```python
 # settings.py
 CORS_ALLOWED_ORIGINS = [
+<<<<<<< HEAD
     'https://tu-frontend-url.com',
+=======
+    "https://kahami-academy.vercel.app",
+>>>>>>> c5d7108 (Guardar cambios locales antes de rebase)
     'http://localhost:3000',
 ]
 ```
