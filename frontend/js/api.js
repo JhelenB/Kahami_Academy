@@ -1,10 +1,9 @@
 // API Client para comunicación con backend Django
 class KahamiAPI {
-    constructor() {
-        this.baseURL = CONFIG?.API_BASE_URL || 'http://localhost:8000/api';
-        this.timeout = 30000;
-    }
-
+constructor() {
+    this.baseURL = 'https://kahami-academy.onrender.com/api';
+    this.timeout = 30000;
+}
     /**
      * Realizar petición HTTP genérica
      */
@@ -17,7 +16,7 @@ class KahamiAPI {
                 'Content-Type': 'application/json',
                 ...headers
             },
-            credentials: 'include' // Incluir cookies de sesión
+            credentials: 'omit'
         };
 
         if (data) {

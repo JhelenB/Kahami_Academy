@@ -1,7 +1,6 @@
 // Configuración global de la aplicación
 const CONFIG = {
-    // API Backend
-    API_BASE_URL: localStorage.getItem('API_BASE_URL') || 'http://localhost:8000/api',
+    API_BASE_URL: 'https://kahami-academy.onrender.com/api',
     
     // Simuladores disponibles
     SIMULATORS: {
