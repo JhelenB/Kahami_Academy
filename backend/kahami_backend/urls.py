@@ -2,8 +2,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("🚀 Kahami Academy está funcionando")
 
 urlpatterns = [
+    path('', home),  # 👈 Ruta principal
     path('admin/', admin.site.urls),
     path('api/auth/', include('apps.users.urls')),
     path('api/simulations/', include('apps.simulations.urls')),
