@@ -8,8 +8,9 @@ def home(request):
     return HttpResponse("🚀 Kahami Academy está funcionando")
 
 urlpatterns = [
-    path('', home),  # 👈 Ruta principal
+    path('', home),
     path('admin/', admin.site.urls),
+
     path('api/auth/', include('apps.users.urls')),
     path('api/simulations/', include('apps.simulations.urls')),
     path('api/recommendations/', include('apps.recommendations.urls')),

@@ -1,29 +1,43 @@
-// Login page logic
-
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('loginForm');
-    const errorElement = document.getElementById('loginError');
+    const loginForm = document.getElementById('loginForm');
+    const errorDiv = document.getElementById('loginError');
 
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearError('loginError');
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Limpiar errores previos
+        errorDiv.style.display = 'none';
 
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-            if (!username || !password) {
-                showError('loginError', 'Por favor completa todos los campos');
-                return;
+        try {
+            // PETICIÓN AL BACKEND (Django puerto 8000)
+            const response = await fetch('http://127.0.0.1:8000/api/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Guardar datos de sesión si es necesario
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                // REDIRIGIR AL DASHBOARD O SIMULADOR
+                window.location.href = 'simulator.html'; 
+            } else {
+                // Mostrar error del servidor
+                errorDiv.textContent = data.error || 'Credenciales inválidas';
+                errorDiv.style.display = 'block';
             }
-
-            try {
-                const response = await api.login(username, password);
-                saveUser(response.user);
-                navigateTo('dashboard.html');
-            } catch (error) {
-                showError('loginError', error.message || 'Error al iniciar sesión');
-            }
-        });
-    }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            errorDiv.textContent = 'No se pudo conectar con el servidor. ¿Está encendido Django?';
+            errorDiv.style.display = 'block';
+        }
+    });
 });

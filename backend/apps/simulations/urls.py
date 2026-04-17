@@ -1,11 +1,18 @@
 from django.urls import path
-from . import views
-
-app_name = 'simulations'
+from .views import (
+    simulation_list,
+    create_simulation,
+    simulation_detail,
+    delete_simulation,
+    simular
+)
 
 urlpatterns = [
-    path('', views.simulation_list, name='list'),
-    path('create/', views.create_simulation, name='create'),
-    path('<int:pk>/', views.simulation_detail, name='detail'),
-    path('<int:pk>/delete/', views.delete_simulation, name='delete'),
+    path('simulations/', simulation_list),
+    path('simulations/create/', create_simulation),
+    path('simulations/<int:pk>/', simulation_detail),
+    path('simulations/delete/<int:pk>/', delete_simulation),
+
+    # 🔥 ESTE ES EL IMPORTANTE
+    path('simular/', simular),
 ]

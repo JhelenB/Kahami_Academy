@@ -1,7 +1,8 @@
 // Face Detection using face-api.js
-// Sprint 2 - Implementado
+// Versión corregida para GitHub Pages
 
-const FACE_API_MODELS_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@0.0.5/model/';
+const FACE_API_MODELS_URL = 'https://justadudewhohacks.github.io/face-api.js/models/';
+
 let faceAPIReady = false;
 
 /**
@@ -9,25 +10,25 @@ let faceAPIReady = false;
  */
 async function initFaceDetection() {
     console.log('[v0] Inicializando detección facial...');
-    
+
     try {
-        // Verificar que face-api está disponible
+        // Verificar face-api disponible
         if (typeof faceapi === 'undefined') {
-            console.error('[v0] face-api.js no está cargado');
+            console.error('[v0] face-api.js NO está cargado');
             return false;
         }
 
-        // Cargar modelos requeridos
+        // Cargar modelos necesarios (ESTABLE)
         await Promise.all([
             faceapi.nets.tinyFaceDetector.loadFromUri(FACE_API_MODELS_URL),
             faceapi.nets.faceLandmark68Net.loadFromUri(FACE_API_MODELS_URL),
             faceapi.nets.faceExpressionNet.loadFromUri(FACE_API_MODELS_URL),
-            faceapi.nets.faceDescriptorNet.loadFromUri(FACE_API_MODELS_URL),
         ]);
 
         faceAPIReady = true;
-        console.log('[v0] Modelos de face-api.js cargados correctamente');
+        console.log('[v0] Modelos cargados correctamente ✔');
         return true;
+
     } catch (error) {
         console.error('[v0] Error al inicializar face-api.js:', error);
         return false;
@@ -35,9 +36,10 @@ async function initFaceDetection() {
 }
 
 /**
- * Detectar rostro en imagen con landmarks y expresiones
+ * Detectar rostro en imagen o canvas
  */
 async function detectFace(imageOrCanvas) {
+
     if (!faceAPIReady) {
         await initFaceDetection();
     }
@@ -45,9 +47,11 @@ async function detectFace(imageOrCanvas) {
     try {
         console.log('[v0] Detectando rostro...');
 
-        // Detectar rostro con tiny face detector (rápido)
         const detections = await faceapi
-            .detectAllFaces(imageOrCanvas, new faceapi.TinyFaceDetectorOptions())
+            .detectAllFaces(
+                imageOrCanvas,
+                new faceapi.TinyFaceDetectorOptions()
+            )
             .withFaceLandmarks()
             .withFaceExpressions();
 
@@ -56,10 +60,9 @@ async function detectFace(imageOrCanvas) {
             return null;
         }
 
-        console.log('[v0] Rostro detectado:', detections[0]);
-        
-        // Retornar el primer rostro detectado (el más grande/principal)
+        console.log('[v0] Rostro detectado ✔');
         return detections[0];
+
     } catch (error) {
         console.error('[v0] Error en detección facial:', error);
         return null;
@@ -67,20 +70,25 @@ async function detectFace(imageOrCanvas) {
 }
 
 /**
- * Detectar múltiples rostros (para casos especiales)
+ * Detectar múltiples rostros
  */
 async function detectMultipleFaces(imageOrCanvas) {
+
     if (!faceAPIReady) {
         await initFaceDetection();
     }
 
     try {
         const detections = await faceapi
-            .detectAllFaces(imageOrCanvas, new faceapi.TinyFaceDetectorOptions())
+            .detectAllFaces(
+                imageOrCanvas,
+                new faceapi.TinyFaceDetectorOptions()
+            )
             .withFaceLandmarks()
             .withFaceExpressions();
 
         return detections || [];
+
     } catch (error) {
         console.error('[v0] Error detectando múltiples rostros:', error);
         return [];
@@ -88,14 +96,14 @@ async function detectMultipleFaces(imageOrCanvas) {
 }
 
 /**
- * Obtener bounding box del rostro detectado
+ * Bounding box del rostro
  */
 function getFaceBoundingBox(detection) {
-    if (!detection || !detection.detection) {
-        return null;
-    }
+
+    if (!detection || !detection.detection) return null;
 
     const box = detection.detection.box;
+
     return {
         x: box.x,
         y: box.y,
@@ -109,90 +117,103 @@ function getFaceBoundingBox(detection) {
 }
 
 /**
- * Obtener landmarks faciales (puntos clave)
+ * Landmarks faciales
  */
 function getFaceLandmarks(detection) {
-    if (!detection || !detection.landmarks) {
-        return null;
-    }
+
+    if (!detection || !detection.landmarks) return null;
 
     const landmarks = detection.landmarks;
-    
+
     return {
         positions: landmarks.positions,
-        
-        // Puntos específicos de interés
         leftEye: landmarks.getLeftEye(),
         rightEye: landmarks.getRightEye(),
-        leftEyeBrow: landmarks.getLeftEyeBrow(),
-        rightEyeBrow: landmarks.getRightEyeBrow(),
         mouth: landmarks.getMouth(),
         nose: landmarks.getNose(),
-        jawOutline: landmarks.getJawOutline(),
-        
-        // Todas las posiciones
-        allPoints: landmarks.positions
+        jawOutline: landmarks.getJawOutline()
     };
 }
 
 /**
- * Obtener expresiones faciales detectadas
+ * Expresiones faciales
  */
 function getFaceExpressions(detection) {
-    if (!detection || !detection.expressions) {
-        return null;
-    }
 
-    const expressions = detection.expressions;
-    
-    // Retornar expresiones con valores normalizados (0-1)
+    if (!detection || !detection.expressions) return null;
+
+    const exp = detection.expressions;
+
+    // Buscar emoción dominante
+    let dominant = 'neutral';
+    let max = 0;
+
+    Object.keys(exp).forEach(key => {
+        if (exp[key] > max) {
+            max = exp[key];
+            dominant = key;
+        }
+    });
+
     return {
-        neutral: expressions.neutral,
-        happy: expressions.happy,
-        sad: expressions.sad,
-        angry: expressions.angry,
-        fearful: expressions.fearful,
-        disgusted: expressions.disgusted,
-        surprised: expressions.surprised,
-        // Expresión dominante
-        dominant: Object.keys(expressions).reduce((a, b) => 
-            expressions[a] > expressions[b] ? a : b
-        )
+        neutral: exp.neutral,
+        happy: exp.happy,
+        sad: exp.sad,
+        angry: exp.angry,
+        fearful: exp.fearful,
+        disgusted: exp.disgusted,
+        surprised: exp.surprised,
+        dominant
     };
 }
 
 /**
- * Dibujar detección facial en canvas (para debugging)
+ * Dibujar detección en canvas
  */
 function drawFaceDetection(canvas, detection) {
+
     if (!detection) return;
 
-    const displaySize = { 
-        width: canvas.width, 
-        height: canvas.height 
+    const ctx = canvas.getContext('2d');
+
+    const displaySize = {
+        width: canvas.width,
+        height: canvas.height
     };
 
     faceapi.matchDimensions(canvas, displaySize);
 
-    const resizedDetections = faceapi.resizeResults([detection], displaySize);
+    const resized = faceapi.resizeResults([detection], displaySize);
 
-    // Limpiar canvas
-    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Dibujar detección y landmarks
-    resizedDetections.forEach((d) => {
+    resized.forEach(d => {
+
         const box = d.detection.box;
+
+        // Caja rostro
         ctx.strokeStyle = '#8B5CF6';
         ctx.lineWidth = 2;
         ctx.strokeRect(box.x, box.y, box.width, box.height);
 
-        // Dibujar landmarks
+        // Landmarks
         if (d.landmarks) {
             ctx.fillStyle = '#EC4899';
-            d.landmarks.positions.forEach((point) => {
-                ctx.fillRect(point.x - 2, point.y - 2, 4, 4);
+
+            d.landmarks.positions.forEach(p => {
+                ctx.fillRect(p.x, p.y, 2, 2);
             });
         }
     });
 }
+
+/**
+ * Inicialización segura automática
+ */
+(async function autoInit() {
+    try {
+        await initFaceDetection();
+    } catch (e) {
+        console.warn('[v0] Auto init falló, se reintentará al usar detectFace');
+    }
+})();

@@ -11,7 +11,11 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-pro
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='localhost,127.0.0.1',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
 
 # Application definition
 INSTALLED_APPS = [
@@ -21,11 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Third-party apps
     'rest_framework',
     'corsheaders',
-    
+
     # Local apps
     'apps.users',
     'apps.simulations',
@@ -33,9 +37,12 @@ INSTALLED_APPS = [
     'apps.courses',
 ]
 
+# settings.py
+
+# 1. Asegúrate de que el Middleware de CORS esté de SEGUNDO
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # <--- AQUÍ
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -44,6 +51,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# 2. Configuración TOTAL de CORS (Copia esto tal cual)
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_CREDENTIALS = True
+
+# 3. Confianza de CSRF (Importante para Registro y Login)
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+]
 ROOT_URLCONF = 'kahami_backend.urls'
 
 TEMPLATES = [
@@ -64,18 +82,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kahami_backend.wsgi.application'
 
-# Database
+# ✅ BASE DE DATOS (ARREGLADO - SQLITE)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='kahami_academy'),
-        'USER': config('DB_USER', default='root'),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -124,16 +135,32 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-# CORS configuration
+# ✅ CONFIGURACIÓN DE CORS (CORREGIDA PARA LOCAL)
 CORS_ALLOWED_ORIGINS = [
-    "https://kahami-academy.vercel.app"
+    "https://kahami-academy.vercel.app",
+    "http://127.0.0.1:5500",  # Común si usas Live Server de VS Code
+    "http://localhost:5500",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
 ]
+
+# Si quieres permitir TODO en desarrollo (más fácil):
+CORS_ALLOW_ALL_ORIGINS = DEBUG 
+
+CORS_ALLOW_CREDENTIALS = True  # ✅ Necesario para que funcionen las sesiones/cookies
+
 CSRF_TRUSTED_ORIGINS = [
-    "https://kahami-academy.vercel.app"
+    "https://kahami-academy.vercel.app",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
 ]
 
 # Session configuration
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 86400 * 30  # 30 days
+SESSION_COOKIE_AGE = 86400 * 30  # 30 días
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SECURE = not DEBUG  # HTTPS only in production
+
+# ✅ Ajuste de seguridad para Cookies (DEBUG detecta si es local o producción)
+SESSION_COOKIE_SECURE = not DEBUG  
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'Lax'

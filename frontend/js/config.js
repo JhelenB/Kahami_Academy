@@ -1,8 +1,9 @@
-// Configuración global de la aplicación
+// frontend/js/config.js
+
 const CONFIG = {
-    API_BASE_URL: 'https://kahami-academy.onrender.com/api',
+    // ✅ CORRECCIÓN: Cambiar la URL de Render por la de tu PC local
+    API_BASE_URL: 'http://127.0.0.1:8000/api', 
     
-    // Simuladores disponibles
     SIMULATORS: {
         micropigmentation: {
             name: 'Micropigmentación',
@@ -26,7 +27,6 @@ const CONFIG = {
         }
     },
 
-    // Cursos (sincronizados con backend)
     COURSES: [
         { id: 1, name: 'Micropigmentación Digital', simulator: 'micropigmentation' },
         { id: 2, name: 'Microblading y Shading', simulator: 'microblading' },
@@ -36,7 +36,6 @@ const CONFIG = {
     ]
 };
 
-// Exportar para módulos
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CONFIG;
 }
