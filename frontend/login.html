@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Kahami Academy</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --dark: #1e1e2f;
+            --light: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #2d2d44 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            overflow: hidden;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 1px; color: #fff; }
+
+        .input-group { margin-bottom: 1.2rem; text-align: left; }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 5px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        input:focus { 
+            background: rgba(255,255,255,0.15); 
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+            border: 1px solid var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        button:hover { 
+            background: #4f46e5; 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        button:disabled {
+            background: #4b4b61;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-text { margin-top: 1.5rem; font-size: 0.85rem; color: #888; }
+        
+        .error-msg { color: #ff4b4b; font-size: 0.9rem; margin-top: 10px; display: none; }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <h2>Kahami Academy</h2>
+        
+        <div class="input-group">
+            <input id="user" type="text" placeholder="Usuario" autocomplete="username">
+        </div>
+        
+        <div class="input-group">
+            <input id="pass" type="password" placeholder="Contraseña" autocomplete="current-password">
+        </div>
+
+        <button type="button" id="loginBtn" onclick="login()">Entrar al Sistema</button>
+        
+        <div id="message" class="error-msg"></div>
+        
+        <p class="footer-text">© 2026 Kahami Academy | Simulación Profesional</p>
+    </div>
+
+    <script>
+        async function login() {
+    const userField = document.getElementById("user");
+    const passField = document.getElementById("pass");
+    const btn = document.getElementById("loginBtn");
+
+    const username = userField.value.trim();
+    const password = passField.value.trim();
+
+    if (!username || !password) {
+        return alert("Por favor, completa todos los campos");
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Entrando...";
+
+    // --- MODO DE PRUEBA (PUENTE) ---
+    // Guardamos datos temporales para que el dashboard no te eche
+    localStorage.setItem("userToken", "token_de_prueba_123");
+    localStorage.setItem("userName", username);
+
+    console.log("Acceso concedido. Redirigiendo...");
+
+    // Intentamos entrar al dashboard
+    // Si tu dashboard está en la misma carpeta, este nombre es suficiente
+    window.location.href = "dashboard.html"; 
+}
+    </script>
+
+</body>
+</html>
