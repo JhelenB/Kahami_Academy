@@ -52,7 +52,7 @@ def simulation_detail(request, pk):
     try:
         simulation = Simulation.objects.get(pk=pk)
     except Simulation.DoesNotExist:
-        return Response({'error': 'Simulación no encontrada'}, status=404)
+        return Response({'error': 'Simulación no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = SimulationSerializer(simulation)
     return Response(serializer.data)
@@ -63,14 +63,14 @@ def simulation_detail(request, pk):
 # =========================
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
-def delete_simulation(request, pk):
+def simulation_delete(request, pk):
     try:
         simulation = Simulation.objects.get(pk=pk)
     except Simulation.DoesNotExist:
-        return Response({'error': 'Simulación no encontrada'}, status=404)
+        return Response({'error': 'Simulación no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
     simulation.delete()
-    return Response({'message': 'Eliminado'}, status=204)
+    return Response({'message': 'Eliminado'}, status=status.HTTP_204_NO_CONTENT)
 
 
 # =========================
