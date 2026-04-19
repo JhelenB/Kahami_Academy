@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Kahami AI - Beauty Analysis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .result-section {
+            margin-top: 30px;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .result-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .analysis-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .analysis-label {
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #FFE66D;
+            margin-bottom: 5px;
+        }
+
+        .analysis-value {
+            font-size: 1.1em;
+            color: #FFFFFF;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #FF6B6B;
+            color: #FFE66D;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💄 Kahami AI - Análisis de Belleza</h1>
+
+        <div class="upload-section">
+            <input type="file" id="image" accept="image/*">
+            <br><br>
+            <button onclick="upload()">🔍 Analizar Rostro</button>
+        </div>
+
+        <div class="result-section">
+            <div id="result" class="result-card">
+                <div class="result-title">📸 Sube una foto frontal clara para comenzar</div>
+            </div>
+
+            <div id="analysis" style="display: none;">
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <div class="analysis-label">💄 FORMA DEL ROSTRO</div>
+                        <div class="analysis-value" id="face-shape">-</div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">✨ SIMETRÍA FACIAL</div>
+                        <div class="analysis-value" id="symmetry">-</div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">💋 RECOMENDACIÓN MAQUILLAJE</div>
+                        <div class="analysis-value" id="makeup">-</div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">💇‍♀️ ESTILO DE CABELLO</div>
+                        <div class="analysis-value" id="hair-style">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="simulation.js"></script>
+</body>
+</html>

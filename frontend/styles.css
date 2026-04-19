@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+}
+
+/* CONTENEDOR */
+.main {
+    padding: 20px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    color: gold;
+}
+
+/* BOTONES */
+.actions {
+    margin: 20px 0;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* BOTON DORADO */
+.gold {
+    background: linear-gradient(45deg, #d4af37, #ffd700);
+    color: black;
+}
+
+/* BOTON BORDE */
+.outline {
+    background: transparent;
+    border: 1px solid gold;
+    color: gold;
+}
+
+/* CARD */
+.card {
+    background: #111;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    border: 1px solid rgba(255,215,0,0.2);
+    box-shadow: 0 0 20px rgba(255,215,0,0.1);
+}
+
+/* STATS */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.stat {
+    text-align: center;
+}
+
+/* HISTORIAL */
+.analysis {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.analysis img {
+    width: 70px;
+    border-radius: 15px;
+    border: 2px solid gold;
+}
+
+/* TEXTO DORADO */
+.gold-text {
+    color: gold;
+}
+
+/* MENU INFERIOR */
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #111;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    border-top: 1px solid rgba(255,215,0,0.2);
+}
+
+.bottom-menu button {
+    background: none;
+    border: none;
+    color: white;
+}
+
+.bottom-menu .active {
+    color: gold;
+}
